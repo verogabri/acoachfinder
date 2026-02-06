@@ -5,7 +5,7 @@ just a little project with Vue CLI, Vuex and router
 This template should help get you started developing with Vue 3 in Vite.
 
 usa un db firebase per salvare i dati
-[https://acoachfinder-default-rtdb.europe-west1.firebasedatabase.app/]
+
 
 
 ## Recommended IDE Setup
