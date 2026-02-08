@@ -1,19 +1,11 @@
 <template>
-    <main>
-        <section>
-            <base-card>
-                <h2>ops</h2>
-                <p>ops this page dont exist</p>
-                <router-link to="/">back to home</router-link>
-            </base-card>
-        </section>
-    </main>
+  <section>
+    <base-card>
+      <h2>Page not found</h2>
+      <p>
+        This page could not be found - maybe check out all our
+        <router-link to="/coaches">coaches</router-link>.
+      </p>
+    </base-card>
+  </section>
 </template>
-
-<script>
-export default {
-    name: 'NotFound'
-}
-</script>
-
-<style scoped></style>

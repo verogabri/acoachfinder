@@ -1,70 +1,50 @@
 export default {
-    contactCoach(context, payload) {
-        const newRequest = {
-            id: new Date().toISOString(),
-            nameId: payload.nameId,
-            email: payload.email,
-            message: payload.message
-        };
+  async contactCoach(context, payload) {
+    const newRequest = {
+      userEmail: payload.email,
+      message: payload.message
+    };
+    const token = context.rootGetters.token;
+    const response = await fetch(`${import.meta.env.VITE_FIREBASE_URL}/requests/${payload.coachId}.json?auth=${token}`, {
+      method: 'POST',
+      body: JSON.stringify(newRequest)
+    });
 
-        context.commit('addRequest', newRequest);
+    const responseData = await response.json();
 
-    },
-    async postRequest(context, payload) {
-
-        const nameId = payload.nameId;
-        const newRequest = {
-            // nameId: nameId,
-            email: payload.email,
-            message: payload.message
-        };
-
-
-        const response = await fetch(`${import.meta.env.VITE_FIREBASE_URL}/requests/${nameId}.json`, {
-            method: 'POST',
-            body: JSON.stringify(newRequest)
-        });
-
-        const responseData = await response.json();
-
-        console.log('responseData', responseData);
-
-        if (!response.ok) {
-            const error = new Error(responseData.message || 'Failed to post request');
-            throw error;
-        }
-
-        const request = {
-            nameId: nameId,
-            ...payload
-        };
-
-        context.commit('addRequest', request);
-    },
-    async loadRequests(context) {
-        const nameId = context.rootGetters.nameId;
-        const response = await fetch(`${import.meta.env.VITE_FIREBASE_URL}/requests/${nameId}.json`);
-        const responseData = await response.json();
-
-        console.log('loadRequests responseData', nameId, responseData);
-
-        if (!response.ok) {
-            const error = new Error(responseData.message || 'Failed to load requests');
-            throw error;
-        }
-
-        const requests = [];
-
-        for (const key in responseData) {
-            const request = {
-                id: key,
-                nameId: nameId,
-                ...responseData[key]
-            };
-
-            requests.push(request);
-        }
-
-        context.commit('setRequests', requests);
+    if (!response.ok) {
+      const error = new Error(responseData.message || 'Failed to send request.');
+      throw error;
     }
-}   
+
+    newRequest.id = responseData.name;
+    newRequest.coachId = payload.coachId;
+
+    context.commit('addRequest', newRequest);
+  },
+  async fetchRequests(context) {
+    const coachId = context.rootGetters.userId;
+    const token = context.rootGetters.token;
+    const response = await fetch(`${import.meta.env.VITE_FIREBASE_URL}/requests/${coachId}.json?auth=${token}`);
+    const responseData = await response.json();
+
+    if (!response.ok) {
+      const error = new Error(responseData.message || 'Failed to fetch requests.');
+      throw error;
+    }
+
+    const requests = [];
+
+    for (const key in responseData) {
+      const request = {
+        id: key,
+        coachId: coachId,
+        userEmail: responseData[key].userEmail,
+        message: responseData[key].message
+      };
+      requests.push(request);
+    }
+
+    context.commit('setRequests', requests);
+  }
+};

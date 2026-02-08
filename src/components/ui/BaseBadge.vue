@@ -1,29 +1,18 @@
 <template>
-    <span class="badge" :class="mode">
-        {{ textUpperCase }}
-    </span>
+  <span class="badge" :class="type">
+    {{ text }}
+  </span>
 </template>
 
 <script>
 export default {
-    name: 'BaseBadge',
-    props: {
-        mode: {
-            type: String,
-            required: false,
-            default: ''
-        },
-        text: {
-            type: String,
-            required: true
-        }
-    },
-    computed: {
-        textUpperCase(){
-            return this.text.toUpperCase();
-        }
+  props: ['type', 'title'],
+  computed: {
+    text() {
+      return this.title.toUpperCase();
     }
-};
+  }
+}
 </script>
 
 <style scoped>
@@ -50,5 +39,4 @@ export default {
   background-color: #8d006e;
   color: white;
 }
-
 </style>

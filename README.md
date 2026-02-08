@@ -6,6 +6,12 @@ This template should help get you started developing with Vue 3 in Vite.
 
 usa un db firebase per salvare i dati
 
+# Login
+aggiunto il giro di un login
+cambiato tutto il src con quello dell'esempio del corso
+e ripulito il db su firebase
+
+su firebase messo le imposatzioni read n write con limiti
 
 
 ## Recommended IDE Setup
