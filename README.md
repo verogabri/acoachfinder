@@ -13,6 +13,17 @@ e ripulito il db su firebase
 
 su firebase messo le imposatzioni read n write con limiti
 
+# Hosting
+provato a fare l'hosting su firebase, e ha funzionato
+
+[https://acoachfinder.web.app]
+
+oppure
+
+[https://acoachfinder.firebaseapp.com]
+
+
+
 
 ## Recommended IDE Setup
 
