@@ -17,6 +17,10 @@ coverage
 .env.local
 .env.example
 
+# hosting firebase
+.firebase/*
+.firebaserc
+firebase.json
 
 # Editor directories and files
 .vscode/*

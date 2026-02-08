@@ -1,24 +1,40 @@
 <template>
-    <header>
-
-        <h1><router-link to="/">A coach finder</router-link></h1>
-        
-        <nav>
-            <ul>
-                <li><router-link to="/coaches">All Coaches</router-link></li>
-                <!-- <li><router-link to="/register">Register as a coach</router-link></li> -->
-                <li><router-link to="/requests">Requests</router-link></li>
-                <li><router-link to="/about">About</router-link></li>
-            </ul>
-        </nav>
-    </header>
+  <header>
+    <nav>
+      <h1>
+        <router-link to="/">Find a Coach</router-link>
+      </h1>
+      <ul>
+        <li>
+          <router-link to="/coaches">All Coaches</router-link>
+        </li>
+        <li v-if="isAuthenticated">
+          <router-link to="/requests">Requests</router-link>
+        </li>
+        <li v-else>
+          <router-link to="/auth">Login</router-link>
+        </li>
+        <li v-if="isAuthenticated">
+          <base-button @click="logout">Logout</base-button>
+        </li>
+      </ul>
+    </nav>
+  </header>
 </template>
 
 <script>
-import router from '@/router';
-
 export default {
-    name: 'HeaderPage'
+  computed: {
+    isAuthenticated() {
+      return this.$store.getters.isAuthenticated;
+    }
+  },
+  methods: {
+    logout() {
+      this.$store.dispatch('logout');
+      this.$router.replace('/coaches');
+    }
+  }
 }
 </script>
 
@@ -81,6 +97,4 @@ header ul {
 li {
   margin: 0 0.5rem;
 }
-
 </style>
-

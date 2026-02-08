@@ -1,30 +1,32 @@
 <template>
-    <button v-if="!to" :class="mode" :disabled="disabled">
-        <slot></slot>
-    </button>
-    <router-link v-else :to="to" :class="mode" :disabled="disabled">
-        <slot></slot>
-    </router-link>
+  <button v-if="!link" :class="mode">
+    <slot></slot>
+  </button>
+  <router-link v-else :to="to" :class="mode">
+    <slot></slot>
+  </router-link>
 </template>
 
 <script>
 export default {
-    name: 'BaseButton',
-    props: {
-        mode: {
-            type: String,
-            required: false
-        },  
-        to: {
-            type: String,
-            required: false
-        },
-        disabled: {
-            type: Boolean,
-            required: false
-        }
-    }   
-};
+  props: {
+    mode: {
+      type: String,
+      required: false,
+      default: null
+    },
+    link: {
+      type: Boolean,
+      required: false,
+      default: false
+    },
+    to: {
+      type: String,
+      required: false,
+      default: '/'
+    }
+  }
+}
 </script>
 
 <style scoped>
@@ -68,5 +70,4 @@ button:active {
 .outline:active {
   background-color: #edd2ff;
 }
-
 </style>

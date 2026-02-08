@@ -1,51 +1,47 @@
 <template>
-    <base-card>
-        <h2>Find Your Coach</h2>
-        <span class="filter-option">
-            <input type="checkbox" id="frontend" checked @change="setFilter" />
-            <label for="frontend">Frontend</label>
-        </span>
-        <span class="filter-option">
-            <input type="checkbox" id="backend" checked @change="setFilter" />
-            <label for="backend">Backend</label>
-        </span>
-        <span class="filter-option">
-            <input type="checkbox" id="career" checked @change="setFilter" />
-            <label for="career">Career</label>
-        </span>
-    </base-card>
+  <base-card>
+    <h2>Find Your Coach</h2>
+    <span class="filter-option">
+      <input type="checkbox" id="frontend" checked @change="setFilter" />
+      <label for="frontend">Frontend</label>
+    </span>
+    <span class="filter-option">
+      <input type="checkbox" id="backend" checked @change="setFilter" />
+      <label for="backend">Backend</label>
+    </span>
+    <span class="filter-option">
+      <input type="checkbox" id="career" checked @change="setFilter" />
+      <label for="career">Career</label>
+    </span>
+  </base-card>
 </template>
 
 <script>
 export default {
-    name: 'CoachFilter',
-    emits: ['change-filters'],  
-    data(){
-        return {
-            filters: {
-                frontend: true,
-                backend: true,
-                career: true
-            }
-        }
-    },
-    methods: {
-        setFilter(event){
-            const { id, checked } = event.target;
-            this.filters[id] = checked;
-            const updateFilters = {
-                ...this.filters,
-                [id]: checked
-            };
-
-            this.filters = updateFilters;
-            this.$emit('change-filters', updateFilters);
-            
-        }
+  emits: ['change-filter'],
+  data() {
+    return {
+      filters: {
+        frontend: true,
+        backend: true,
+        career: true
+      }
+    };
+  },
+  methods: {
+    setFilter(event) {
+      const inputId = event.target.id;
+      const isActive = event.target.checked;
+      const updatedFilters = {
+        ...this.filters,
+        [inputId]: isActive
+      };
+      this.filters = updatedFilters;
+      this.$emit('change-filter', updatedFilters);
     }
+  }
 }
 </script>
-
 
 <style scoped>
 h2 {
@@ -68,5 +64,4 @@ h2 {
 .filter-option.active label {
   font-weight: bold;
 }
-
 </style>
